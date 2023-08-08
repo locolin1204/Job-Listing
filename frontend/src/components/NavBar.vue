@@ -1,20 +1,21 @@
 <template>
-  <nav>
+    <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/hire">Hire Talent</router-link> |
     <router-link to="/get-job">Get Job Now</router-link>
   </nav>
-  <router-view/>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+	name: "NavBar",
+	components: {},
+});
+</script>
+
+<style scoped>
 
 nav {
   padding: 30px;
@@ -27,6 +28,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: var(--global-green);
 }
 </style>

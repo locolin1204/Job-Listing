@@ -23,6 +23,11 @@ public class JobController {
     @Autowired
     SearchRepository searchRepo;
 
+    @GetMapping("/_health")
+    public String health(){
+        return "OK";
+    }
+
     @ApiIgnore
     @RequestMapping(value = "/")
     public void redirect(HttpServletResponse response) throws IOException {
@@ -34,14 +39,14 @@ public class JobController {
         return repo.findAll();
     }
 
-    @PostMapping("/addpost")
-    public JobPost addpost(@RequestBody JobPost post){
-        return repo.save(post);
-    }
-
     @GetMapping("/posts/{text}")
     public List<JobPost> search(@PathVariable String text){
         return searchRepo.findByText(text);
+    }
+
+    @PostMapping("/addpost")
+    public JobPost addpost(@RequestBody JobPost post){
+        return repo.save(post);
     }
 
 }

@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.colinlo.joblisting.repository.JobPostRepository;
 import com.colinlo.joblisting.model.JobPost;
-import com.colinlo.joblisting.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ import java.util.List;
 public class JobController {
 
     @Autowired
-    JobPostRepository repo;
+    JobPostRepository jobRepo;
 
 //    @Autowired
 //    SearchRepository searchRepo;
@@ -36,24 +35,24 @@ public class JobController {
 
     @GetMapping("/allposts")
     public List<JobPost> getAllPosts(){
-        return repo.findAll();
+        return jobRepo.getAllPosts();
     }
 
     @GetMapping("/posts/{text}")
-    public List<JobPost> search(@PathVariable String text){
-        return repo.findByText(text);
+    public List<JobPost> searchPost(@PathVariable String text){
+        return jobRepo.findByText(text);
     }
 
     @PostMapping("/addpost")
     @ResponseStatus(HttpStatus.CREATED)
     public JobPost addPost(@RequestBody JobPost post){
-        return repo.insert(post);
+        return jobRepo.addPost(post);
     }
 
     @DeleteMapping("/deletepost/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable String id) { repo.deleteById(id); }
+    public void deletePost(@PathVariable String id) { jobRepo.deleteById(id); }
 
     @PatchMapping("/editPost")
-    public JobPost editPost(@RequestBody JobPost post){ return repo.save(post); }
+    public JobPost editPost(@RequestBody JobPost post){ return jobRepo.editPost(post); }
 }

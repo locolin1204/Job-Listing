@@ -3,20 +3,19 @@
 		<div class="job-profile">
 			{{ job?.profile }}
 		</div>
-		<div>
-			<div class="job-details">
-				<div class="job-desc">
-					{{ job?.desc }}
-				</div>
-				<div>
-					<span
-						class="job-techs"
-						v-for="(tech, index) in job?.techs"
-						:key="index"
-					>
-						{{ tech }}
-					</span>
-				</div>
+
+		<div class="job-details">
+			<div class="job-desc">
+				{{ job?.desc }}
+			</div>
+			<div>
+				<span
+					class="job-techs"
+					v-for="(tech, index) in job?.techs"
+					:key="index"
+				>
+					{{ tech }}
+				</span>
 			</div>
 		</div>
 	</div>
@@ -42,27 +41,27 @@ export default defineComponent({
 	display: flex;
 	align-items: center;
 	column-gap: 1em;
-    border-radius: 0.3em;
+	border-radius: 0.3em;
 }
 .job-profile {
-	width: 8em;
+	width: 10em;
 	background-color: rgb(255, 255, 255);
 	padding: 1em 0em;
 	font-weight: 700;
-    border-radius: 0.3em;
+	border-radius: 0.3em;
 }
 .job-desc {
+	text-align: start;
 }
 .job-techs {
 	font-size: 0.8em;
 	padding: 0.2em;
 	color: rgb(97, 97, 97);
-
 }
 .job-details {
-    padding: 0em 0.5em;
+	padding: 0em 0.5em;
 	display: flex;
 	flex-direction: column;
-    align-items: start;
+	align-items: start;
 }
 </style>

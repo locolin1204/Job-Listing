@@ -13,17 +13,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/hire',
     name: 'hire',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: HireView
   },
   {
     path: '/get-job',
     name: 'get-job',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: GetJobView
   }
 ]

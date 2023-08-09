@@ -1,12 +1,14 @@
-package com.colinlo.joblisting.repository;
+package com.colinlo.joblisting.repository.impl;
 
 import com.colinlo.joblisting.model.JobPost;
+import com.colinlo.joblisting.repository.SearchRepository;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Component;
 

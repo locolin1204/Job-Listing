@@ -6,7 +6,7 @@ import com.colinlo.joblisting.repository.JobPostRepository;
 import com.colinlo.joblisting.model.JobPost;
 import com.colinlo.joblisting.repository.SearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -20,8 +20,8 @@ public class JobController {
     @Autowired
     JobPostRepository repo;
 
-    @Autowired
-    SearchRepository searchRepo;
+//    @Autowired
+//    SearchRepository searchRepo;
 
     @GetMapping("/_health")
     public String health(){
@@ -41,12 +41,19 @@ public class JobController {
 
     @GetMapping("/posts/{text}")
     public List<JobPost> search(@PathVariable String text){
-        return searchRepo.findByText(text);
+        return repo.findByText(text);
     }
 
     @PostMapping("/addpost")
-    public JobPost addpost(@RequestBody JobPost post){
-        return repo.save(post);
+    @ResponseStatus(HttpStatus.CREATED)
+    public JobPost addPost(@RequestBody JobPost post){
+        return repo.insert(post);
     }
 
+    @DeleteMapping("/deletepost/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePost(@PathVariable String id) { repo.deleteById(id); }
+
+    @PatchMapping("/editPost")
+    public JobPost editPost(@RequestBody JobPost post){ return repo.save(post); }
 }

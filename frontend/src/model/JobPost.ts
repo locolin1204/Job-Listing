@@ -1,4 +1,5 @@
 export interface JobPostDTO {
+    id?: string
     profile: string
     desc: string
     exp: number

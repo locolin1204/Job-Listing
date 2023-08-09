@@ -9,7 +9,7 @@
 		/>
 	</div>
 	<div class="job-list">
-		<JobItem v-for="(job, index) in jobList" :key="index" :job="job" />
+		<JobItem v-for="job in jobList" :key="job.id" :job="job" />
 	</div>
 </template>
 
@@ -53,5 +53,6 @@ export default defineComponent({
 
 <style scoped>
 .job-list {
+	width: 50em;
 }
 </style>

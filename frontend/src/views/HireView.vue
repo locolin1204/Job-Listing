@@ -191,7 +191,7 @@ label {
 .status-icon {
 	display: flex;
 	width: 1em;
-	padding:0em 0.5em;
+	padding: 0em 0.5em;
 	justify-content: center;
 }
 .warning-icon {

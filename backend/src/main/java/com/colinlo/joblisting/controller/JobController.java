@@ -40,7 +40,7 @@ public class JobController {
 
     @GetMapping("/posts/{text}")
     public List<JobPost> searchPost(@PathVariable String text){
-        return jobRepo.findByText(text);
+        return jobRepo.searchPost(text);
     }
 
     @PostMapping("/addpost")
@@ -51,8 +51,8 @@ public class JobController {
 
     @DeleteMapping("/deletepost/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePost(@PathVariable String id) { jobRepo.deleteById(id); }
+    public void deletePost(@PathVariable String id) { jobRepo.deletePost(id); }
 
-    @PatchMapping("/editPost")
+    @PatchMapping("/editPost") // need some amendment
     public JobPost editPost(@RequestBody JobPost post){ return jobRepo.editPost(post); }
 }

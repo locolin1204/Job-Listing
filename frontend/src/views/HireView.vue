@@ -71,13 +71,7 @@ import { defineComponent } from "vue";
 import { submitJob } from "../services/HireViewServices";
 import { JobPostDTO } from "../model/JobPost";
 import { ref } from "vue";
-
-const sendStatus = {
-	IDLE: "idle",
-	SUCCESS: "success",
-	PENDING: "pending",
-	FAIL: "fail",
-};
+import { sendStatus } from "@/model/SendStatus";
 
 export default defineComponent({
 	name: "HireView",

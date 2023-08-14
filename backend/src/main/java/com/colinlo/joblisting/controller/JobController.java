@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -53,6 +54,14 @@ public class JobController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable String id) { jobRepo.deletePost(id); }
 
-    @PatchMapping("/editPost") // need some amendment
-    public JobPost editPost(@RequestBody JobPost post){ return jobRepo.editPost(post); }
+    @PatchMapping("/editPost/{id}") // need some amendment
+    public JobPost editPost(@PathVariable String id, @RequestBody JobPost post) throws Exception { return jobRepo.editPost(id, post); }
+
+    @GetMapping("/getAllTechs")
+    public List<String> getAllTechs(){ return jobRepo.getAllTechs(); }
+
+    @GetMapping("/filterTechPosts")
+    public List<JobPost> filterTechPosts(@RequestParam("techList") ArrayList<String> techList){
+        return jobRepo.filterTechPosts(techList);
+    }
 }

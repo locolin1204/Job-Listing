@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -46,7 +47,27 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     }
 
     @Override
-    public JobPost editPost(JobPost post) {
-return mongoTemplate.save(post, jobPostCollectionName);
+    public JobPost editPost(String id, JobPost post) throws Exception {
+        Query query = new Query(Criteria.where("id").is(id));
+        List<JobPost> jobPostList = mongoTemplate.find(query, JobPost.class, jobPostCollectionName);
+        if(jobPostList.isEmpty()){
+            throw new Exception("Job Post not found, id not found.");
+        }
+        if(!post.getId().equals(id)) {
+            throw new Exception("id in path does not match id in request body.");
+        }
+        return mongoTemplate.save(post, jobPostCollectionName);
+    }
+
+    @Override
+    public List<String> getAllTechs() {
+        Query query = new Query();
+        return mongoTemplate.findDistinct(query,"techs",JobPost.class, String.class);
+    }
+
+    @Override
+    public List<JobPost> filterTechPosts(ArrayList<String> techList) {
+        Query query = new Query(Criteria.where("techs").in(techList));
+        return mongoTemplate.find(query, JobPost.class, jobPostCollectionName);
     }
 }

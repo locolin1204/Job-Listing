@@ -171,10 +171,11 @@ label {
 	color: var(--warning-red-color);
 }
 .submit-button,
-.checkbox {
+.checkbox,
+.button {
 	cursor: pointer;
 }
-.submit-button:hover {
+.submit-button:hover, .button:hover {
 	background-color: rgb(227, 227, 227);
 }
 .submit-message {

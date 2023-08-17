@@ -61,7 +61,11 @@ public class JobController {
     public List<String> getAllTechs(){ return jobRepo.getAllTechs(); }
 
     @GetMapping("/filterTechPosts")
-    public List<JobPost> filterTechPosts(@RequestParam("techList") ArrayList<String> techList){
+    public List<JobPost> filterTechPosts(@RequestParam("tech-list") ArrayList<String> techList){
         return jobRepo.filterTechPosts(techList);
+    }
+    @GetMapping("/searchAndFilterPost")
+    public List<JobPost> searchAndFilterPost(@RequestParam String text, @RequestParam("tech-list") ArrayList<String> techList){
+        return jobRepo.searchAndFilterPost(text, techList);
     }
 }

@@ -50,10 +50,10 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     public JobPost editPost(String id, JobPost post) throws Exception {
         Query query = new Query(Criteria.where("id").is(id));
         List<JobPost> jobPostList = mongoTemplate.find(query, JobPost.class, jobPostCollectionName);
-        if(jobPostList.isEmpty()){
+        if (jobPostList.isEmpty()) {
             throw new Exception("Job Post not found, id not found.");
         }
-        if(!post.getId().equals(id)) {
+        if (!post.getId().equals(id)) {
             throw new Exception("id in path does not match id in request body.");
         }
         return mongoTemplate.save(post, jobPostCollectionName);
@@ -62,12 +62,40 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     @Override
     public List<String> getAllTechs() {
         Query query = new Query();
-        return mongoTemplate.findDistinct(query,"techs",JobPost.class, String.class);
+        return mongoTemplate.findDistinct(query, "techs", JobPost.class, String.class);
     }
 
     @Override
     public List<JobPost> filterTechPosts(ArrayList<String> techList) {
-        Query query = new Query(Criteria.where("techs").in(techList));
+        Query query = new Query(Criteria.where("techs").all(techList));
+        return mongoTemplate.find(query, JobPost.class, jobPostCollectionName);
+    }
+
+    @Override
+    public List<JobPost> searchAndFilterPost(String text, ArrayList<String> chosenTechList) {
+        System.out.println("text " + text + " text is empty: " + text.isEmpty());
+        System.out.println("chosenTechList " + chosenTechList + " is Empty: " + chosenTechList.isEmpty());
+
+        Criteria searchCriteria = new Criteria();
+        if (!text.isEmpty()) {
+            searchCriteria.orOperator(
+                    Criteria.where("profile").regex(text, "i"),
+                    Criteria.where("desc").regex(text, "i"),
+                    Criteria.where("techs").regex(text, "i")
+            );
+        }
+
+        Criteria filterCriteria = new Criteria();
+        if (!chosenTechList.isEmpty()){
+            filterCriteria.andOperator(Criteria.where("techs").all(chosenTechList));
+        }
+
+        Criteria criteria = new Criteria();
+        criteria.andOperator(
+                searchCriteria,
+                filterCriteria
+        );
+        Query query = new Query(criteria);
         return mongoTemplate.find(query, JobPost.class, jobPostCollectionName);
     }
 }

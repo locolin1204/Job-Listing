@@ -13,4 +13,5 @@ public interface JobPostRepository {
     JobPost editPost(String id, JobPost post) throws Exception;
     List<String> getAllTechs();
     List<JobPost> filterTechPosts(ArrayList<String> techList);
+    List<JobPost> searchAndFilterPost(String text, ArrayList<String> chosenTechList);
 }

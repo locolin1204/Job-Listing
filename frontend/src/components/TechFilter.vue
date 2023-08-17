@@ -1,7 +1,15 @@
 <template>
 	<div>
-		<p>Tech Filters</p>
-		<form @submit="onSubmit" class="job-form">
+		<p>
+			Tech Filters
+			<input
+				type="button"
+				value="Clear Filters"
+				class="button"
+				@click="clearFilters"
+			/>
+		</p>
+		<form class="job-form">
 			<div class="tech-list">
 				<label v-for="(tech, index) in techList" :key="index" :for="tech">
 					<input
@@ -9,12 +17,12 @@
 						:name="tech"
 						:id="tech"
 						:value="tech"
-						v-model="techChosen"
+						@change="updateTechChosen(tech)"
+						v-model="checkedTechs[tech]"
 					/>
-                    {{ tech }}
+					{{ tech }}
 				</label>
 			</div>
-			<input type="submit" value="Submit" class="submit-button"/>
 		</form>
 	</div>
 </template>
@@ -27,23 +35,32 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
 	name: "TechFilter",
-	created() {
-		getAllTechs().then(list => {
-			this.techList = list;
-			this.techList = ["Java", "Swift", "Kotlin"];
-		});
+	props: {
+		techList: { type: Array as () => Array<string>, default: () => [] },
+		techChosen: { type: Array as () => Array<string>, default: () => [] },
 	},
-	data() {
-		return {
-			techList: [] as Array<string> | null,
-			techChosen: [] as Array<string> | null,
-			jobPostWithFilter: [] as Array<JobPostDTO> | null,
-		};
+	computed: {
+		checkedTechs() {
+			const techs = {} as Record<string, boolean>;
+			this.techList.forEach(tech => {
+				techs[tech] = this.techChosen.includes(tech);
+			});
+			return techs;
+		},
 	},
 	methods: {
-		async onSubmit(e: Event) {
-			e.preventDefault();
-			filterTechPosts();
+		clearFilters() {
+			this.$emit("clear-filters");
+		},
+		updateTechChosen(tech: string) {
+			const index = this.techChosen.indexOf(tech);
+			const updatedTechChosen = [...this.techChosen];
+			if (index === -1) {
+				updatedTechChosen.push(tech);
+			} else {
+				updatedTechChosen.splice(index, 1);
+			}
+			this.$emit("update-tech-chosen", updatedTechChosen);
 		},
 	},
 });
@@ -55,10 +72,10 @@ export default defineComponent({
 }
 .tech-list {
 	display: flex;
-    flex-direction: column;
-    align-items: start;
+	flex-direction: column;
+	align-items: start;
 }
-.submit-button {
-    margin: 1em;
+.button {
+	margin: 1em;
 }
 </style>

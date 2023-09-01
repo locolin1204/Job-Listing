@@ -29,7 +29,6 @@
 
 <script lang="ts">
 import { JobPostDTO } from "@/model/JobPost";
-import { filterTechPosts, getAllTechs } from "@/services/GetJobViewServices";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/vue/24/outline";
 import { defineComponent } from "vue";
 

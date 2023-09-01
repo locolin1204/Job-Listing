@@ -55,8 +55,12 @@ export default defineComponent({
 }
 .job-techs {
 	font-size: 0.8em;
-	padding: 0.2em;
+	padding: 0.1em 0.5em;
+	margin: 0.2em;
+	margin-left: 0em;
+	border-radius: 0.2em;
 	color: rgb(97, 97, 97);
+	background-color: rgb(249, 249, 249);
 }
 .job-details {
 	padding: 0em 0.5em;

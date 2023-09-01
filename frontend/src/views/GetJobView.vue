@@ -16,6 +16,7 @@
 				<input type="submit" value="Search" class="button" @click="search" />
 			</div>
 			<div class="job-list">
+				<div class="no-result" v-if="jobList.length===0">No Such Result!</div>
 				<JobItem v-for="job in jobList" :key="job.id" :job="job" />
 			</div>
 		</div>
@@ -35,7 +36,6 @@ import { defineComponent } from "vue";
 import JobItem from "@/components/JobItem.vue";
 import { getAllJobs, getAllTechs, getJobsByKeywordAndFilter } from "@/services/GetJobViewServices";
 import { JobPostDTO } from "@/model/JobPost";
-import { getJobsByKeyword } from "@/services/GetJobViewServices";
 import TechFilter from "@/components/TechFilter.vue";
 
 export default defineComponent({
@@ -61,17 +61,7 @@ export default defineComponent({
 		// XMarkIcon
 	},
 	watch: {
-		// searchText(searchText: string) {
-		// 	if (searchText === "") {
-		// 		getAllJobs().then(list => {
-		// 			this.jobList = list;
-		// 		});
-		// 	} else {
-		// 		getJobsByKeyword(searchText).then(list => {
-		// 			this.jobList = list;
-		// 		});
-		// 	}
-		// },
+	
 	},
 	methods: {
 		search(e: Event) {
@@ -114,4 +104,17 @@ export default defineComponent({
 	padding: 0em 0.5em;
 	justify-content: center;
 }
+
+@keyframes horizontal-shaking {
+ 0% { transform: translateX(0) }
+ 25% { transform: translateX(5px) }
+ 50% { transform: translateX(-5px) }
+ 75% { transform: translateX(5px) }
+ 100% { transform: translateX(0) }
+}
+.no-result {
+	padding: 2em;
+	animation: 0.25s ease-out 0s 1 horizontal-shaking;
+}
+
 </style>

@@ -1,4 +1,2 @@
-package com.colinlo.joblisting.service;
-
-public class JobPostService {
+package com.colinlo.joblisting.service.impl;public interface JobPostService {
 }

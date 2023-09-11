@@ -2,9 +2,6 @@ package com.colinlo.joblisting.repository.impl;
 
 import com.colinlo.joblisting.model.JobPost;
 import com.colinlo.joblisting.repository.JobPostRepository;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

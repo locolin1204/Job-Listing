@@ -16,6 +16,8 @@
 				<input type="submit" value="Search" class="button" @click="search" />
 			</div>
 			<div class="job-list">
+				<!-- if jobList.length === 0 and response unknown -> loading screen -->
+				<!-- if jobList.length === 0 AND response === 200 -> "no such result" -->
 				<div class="no-result" v-if="jobList.length===0">No Such Result!</div>
 				<JobItem v-for="job in jobList" :key="job.id" :job="job" />
 			</div>

@@ -25,7 +25,7 @@ export async function getJobsByKeywordAndFilter(
 		const url = new URL(`${process.env.VUE_APP_BASE_URL}/searchAndFilterPost`);
 		const params = new URLSearchParams();
 		params.append("tech-list", techList.join(","));
-		params.append("keyword", keyword)
+		params.append("keyword", keyword)		
 	
 		const res = await axios.get(url.toString(), { params } );
 		const status = await res.status;

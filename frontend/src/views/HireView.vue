@@ -41,19 +41,16 @@
 			<div>
 				<div class="submit-message">
 					<input type="submit" value="Submit" class="submit-button" />
-					<div class="status-icon" v-if="sendStatus !=='idle'">
+					<div class="status-icon" v-if="isSent == true">
 						<ArrowPathIcon
-							v-if="sendStatus === 'pending'"
+							v-if="submitJobRes === null && !isError"
 							class="loading-icon icon"
 						/>
 						<CheckCircleIcon
-							v-if="sendStatus === 'success'"
+							v-if="submitJobRes?.status === 201 && !isError"
 							class="success-icon"
 						/>
-						<ExclamationTriangleIcon
-							v-if="sendStatus === 'fail'"
-							class="warning-icon"
-						/>
+						<ExclamationTriangleIcon v-if="isError" class="warning-icon" />
 					</div>
 				</div>
 			</div>
@@ -68,10 +65,11 @@ import {
 	ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
 import { defineComponent } from "vue";
-import { submitJob } from "../services/HireViewServices";
+import { submitJobAndResponse } from "../services/HireViewServices";
 import { JobPostDTO } from "../model/JobPost";
 import { ref } from "vue";
-import { sendStatus } from "@/model/SendStatus";
+import { StatusCodes } from "http-status-codes";
+import { AxiosResponse } from "axios";
 
 export default defineComponent({
 	name: "HireView",
@@ -89,13 +87,15 @@ export default defineComponent({
 			jobDesc: "",
 			techsRequired: [] as string[],
 			isFilledIn: true,
-			isSubmited: false,
-			sendStatus: sendStatus.IDLE,
+			isSent: false,
+			isError: false,
+			submitJobRes: null as AxiosResponse | null,
 		};
 	},
 	components: { ExclamationTriangleIcon, CheckCircleIcon, ArrowPathIcon },
 	methods: {
 		async onSubmit(e: Event) {
+			this.isSent = false;
 			e.preventDefault();
 			if (!this.jobProfile || !this.jobDesc || this.techsRequired.length == 0) {
 				this.isFilledIn = false;
@@ -110,17 +110,18 @@ export default defineComponent({
 				techs: this.techsRequired,
 			};
 
-			this.sendStatus = sendStatus.PENDING;
-			this.isSubmited = await submitJob(newJob);
-
-			if (this.isSubmited) {
-				this.sendStatus = sendStatus.SUCCESS;
-				this.jobProfile = "";
-				this.jobDesc = "";
-				this.jobExp = 0;
-				this.techsRequired = [];
-			} else {
-				this.sendStatus = sendStatus.FAIL;
+			this.isSent = true;
+			try {
+				this.submitJobRes = await submitJobAndResponse(newJob);
+				if (this.submitJobRes.status === StatusCodes.OK) {
+					this.jobProfile = "";
+					this.jobDesc = "";
+					this.jobExp = 0;
+					this.techsRequired = [];
+				}
+			} catch (error) {
+				this.isError = true;
+				console.error(error);
 			}
 		},
 	},
@@ -175,7 +176,8 @@ label {
 .button {
 	cursor: pointer;
 }
-.submit-button:hover, .button:hover {
+.submit-button:hover,
+.button:hover {
 	background-color: rgb(227, 227, 227);
 }
 .submit-message {
@@ -210,6 +212,5 @@ label {
 }
 
 .icon {
-
 }
 </style>

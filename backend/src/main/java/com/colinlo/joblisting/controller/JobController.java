@@ -2,12 +2,8 @@ package com.colinlo.joblisting.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.colinlo.joblisting.repository.JobPostRepository;
 import com.colinlo.joblisting.model.JobPost;
 import com.colinlo.joblisting.service.JobPostService;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -39,15 +35,15 @@ public class JobController {
         response.sendRedirect("/swagger-ui.html");
     }
 
-    @GetMapping("/allposts")
+    @GetMapping("/posts")
     public List<JobPost> getAllPosts(){
         return jobPostService.getAllPosts();
     }
 
-    @GetMapping("/getAllTechs")
+    @GetMapping("/techs")
     public List<String> getAllTechs(){ return jobPostService.getAllTechs(); }
 
-    @GetMapping("/searchAndFilterPost")
+    @GetMapping("/search-filter-posts")
     public List<JobPost> searchAndFilterPost(@RequestParam("keyword") String text, @RequestParam("tech-list") ArrayList<String> techList){
         return jobPostService.getPostBySearchTextAndTech(text, techList);
     }
@@ -62,7 +58,7 @@ public class JobController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable String id) { jobPostService.deletePost(id); }
 
-    @PatchMapping("/editPost")
+    @PatchMapping("/editpost")
     public JobPost editPost(@RequestBody JobPost post) throws Exception { return jobPostService.editPost(post); }
 
 }

@@ -1,7 +1,10 @@
 package com.colinlo.joblisting.repository.impl;
 
+import com.colinlo.joblisting.controller.JobController;
 import com.colinlo.joblisting.model.JobPost;
 import com.colinlo.joblisting.repository.JobPostRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,11 +18,12 @@ import java.util.List;
 public class JobPostRepositoryImpl implements JobPostRepository {
     @Autowired
     MongoTemplate mongoTemplate;
-
-    String jobPostCollectionName = "JobPost";
+    Logger logger = LoggerFactory.getLogger(JobController.class);
+    String jobPostCollectionName = "jobPosts";
 
     @Override
     public List<JobPost> getAllPosts() {
+        logger.trace("getAllPosts");
         return mongoTemplate.findAll(JobPost.class, jobPostCollectionName);
     }
 

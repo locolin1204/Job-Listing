@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @CompoundIndex(def="{'profile': 'text', 'desc': 'text', 'techs': 'text'}")
 @Data
 @NoArgsConstructor
-@Document(collection = "JobPost")
+@Document(collection = "jobPosts")
 public class JobPost {
 
     @Id

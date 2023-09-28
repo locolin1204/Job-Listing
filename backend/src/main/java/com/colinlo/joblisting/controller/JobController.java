@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/job")
 @CrossOrigin(origins = "${frontend.base.url}")
 public class JobController {
     @Autowired

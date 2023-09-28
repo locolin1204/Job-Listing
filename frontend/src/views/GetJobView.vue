@@ -14,20 +14,24 @@
 				/>
 				<!-- <XMarkIcon class="cross-icon"/> -->
 				<input type="submit" value="Search" class="button" @click="search" />
+				<ArrowPathIcon
+					:class="['loading-icon',!(
+							isGetJobsByKeywordAndFilterSent === true &&
+							hasGetJobsByKeywordAndFilterResponse === false
+						) ? 'disable' : '']"
+				/>
+				
 			</div>
 			<div class="job-list">
 				<div
-					class=""
+					class="no-result"
 					v-if="
-						isGetJobsByKeywordAndFilterSent === true &&
-						isGetJobsByKeywordAndFilterStatus == null
+						jobList.length === 0 &&
+						hasGetJobsByKeywordAndFilterResponse === true
 					"
 				>
-					Loading...
+					No Such Result!
 				</div>
-				<!-- if jobList.length === 0 and response unknown -> loading screen -->
-				<!-- if jobList.length === 0 AND response === 200 -> "no such result" -->
-				<div class="no-result" v-if="jobList.length === 0">No Such Result!</div>
 				<JobItem v-for="job in jobList" :key="job.id" :job="job" />
 			</div>
 		</div>
@@ -41,6 +45,7 @@
 </template>
 
 <script lang="ts">
+import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
 import { defineComponent } from "vue";
 import JobItem from "@/components/JobItem.vue";
@@ -54,8 +59,10 @@ import TechFilter from "@/components/TechFilter.vue";
 
 export default defineComponent({
 	created() {
+		this.isGetJobsByKeywordAndFilterSent = true;
 		getAllJobs().then(list => {
 			this.jobList = list ?? [];
+			this.isGetJobsByKeywordAndFilterSent = false;
 		});
 		getAllTechs().then(list => {
 			this.techList = list ?? [];
@@ -67,13 +74,14 @@ export default defineComponent({
 			jobList: [] as Array<JobPostDTO>,
 			techList: [] as Array<string>,
 			techChosen: [] as Array<string>,
-			isGetJobsByKeywordAndFilterSent: false, //here
-			isGetJobsByKeywordAndFilterStatus: null as number | null,
+			isGetJobsByKeywordAndFilterSent: false,
+			hasGetJobsByKeywordAndFilterResponse: false,
 		};
 	},
 	components: {
 		JobItem,
 		TechFilter,
+		ArrowPathIcon,
 		// XMarkIcon
 	},
 	watch: {},
@@ -82,17 +90,18 @@ export default defineComponent({
 			try {
 				e.preventDefault();
 				this.isGetJobsByKeywordAndFilterSent = true;
+				this.hasGetJobsByKeywordAndFilterResponse = false;
 				const res = await jobsByKeywordAndFilterResponse(
 					this.searchText,
 					this.techChosen
 				);
 				this.jobList = res.data ?? [];
-				this.isGetJobsByKeywordAndFilterStatus = res.status;
+				this.hasGetJobsByKeywordAndFilterResponse = true;
 				console.log(res.status);
 			} catch (error) {
+				this.hasGetJobsByKeywordAndFilterResponse = false;
 				console.error(error);
 			}
-			this.isGetJobsByKeywordAndFilterStatus = null;
 			this.isGetJobsByKeywordAndFilterSent = false;
 		},
 		updateTechChosen(list: Array<string>) {
@@ -146,5 +155,23 @@ export default defineComponent({
 .no-result {
 	padding: 2em;
 	animation: 0.25s ease-out 0s 1 horizontal-shaking;
+}
+
+@keyframes rotating {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+.loading-icon {
+	width: 1em;
+	animation: rotating 2s linear infinite;
+	opacity: 1;
+}
+.disable {
+	opacity: 0;
 }
 </style>

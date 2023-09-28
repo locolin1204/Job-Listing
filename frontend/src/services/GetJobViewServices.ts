@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 
 export async function getAllJobs(): Promise<Array<JobPostDTO> | null> {
 	try {
-		const url = new URL(`${process.env.VUE_APP_BASE_URL}/posts`);
+		const url = new URL(`${process.env.VUE_APP_BASE_URL}/api/v1/job/posts`);
 		const res = await axios.get(url.toString());
 		const status = await res.status;
 		const data = await res.data;
@@ -22,7 +22,7 @@ export async function jobsByKeywordAndFilterResponse(
 	techList: Array<string>
 ): Promise<AxiosResponse> {
 	try {
-		const url = new URL(`${process.env.VUE_APP_BASE_URL}/search-filter-posts`);
+		const url = new URL(`${process.env.VUE_APP_BASE_URL}/api/v1/job/search-filter-posts`);
 		const params = new URLSearchParams();
 		params.append("tech-list", techList.join(","));
 		params.append("keyword", keyword);
@@ -43,7 +43,7 @@ export async function jobsByKeywordAndFilterResponse(
 
 export async function getAllTechs(): Promise<Array<string> | null> {
 	try {
-		const url = `${process.env.VUE_APP_BASE_URL}/techs`;
+		const url = `${process.env.VUE_APP_BASE_URL}/api/v1/job/techs`;
 		const res = await axios.get(url.toString());
 		const status = await res.status;
 		const data = await res.data;

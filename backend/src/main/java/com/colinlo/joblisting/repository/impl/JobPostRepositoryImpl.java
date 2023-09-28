@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -23,24 +24,27 @@ public class JobPostRepositoryImpl implements JobPostRepository {
 
     @Override
     public List<JobPost> getAllPosts() {
-        logger.trace("getAllPosts");
+        logger.info("Get All Posts");
         return mongoTemplate.findAll(JobPost.class, jobPostCollectionName);
     }
 
     @Override
     public List<String> getAllTechs() {
         Query query = new Query();
+        logger.info("Get All Techs");
         return mongoTemplate.findDistinct(query, "techs", JobPost.class, String.class);
     }
 
     @Override
     public JobPost getPostById(String id) {
         Query query = new Query(Criteria.where("id").is(id));
+        logger.info(String.format("Get Post with ID: %s", id));
         return mongoTemplate.findOne(query, JobPost.class, jobPostCollectionName);
     }
 
     @Override
     public Criteria getCriteriaById(String id) {
+        logger.trace(String.format("Get Criteria with ID: %s", id));
         return Criteria.where("id").is(id);
     }
 
@@ -52,6 +56,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
                 Criteria.where("desc").regex(text, "i"),
                 Criteria.where("techs").regex(text, "i")
         );
+        logger.trace(String.format("Get Criteria with Text: %s", text));
         return criteria;
     }
 
@@ -59,6 +64,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     public Criteria getCriteriaByTechList(ArrayList<String> chosenTechList) {
         Criteria criteria = new Criteria();
         criteria.andOperator(Criteria.where("techs").all(chosenTechList));
+        logger.trace(String.format("Get Criteria with Techs: %s", chosenTechList));
         return criteria;
     }
 
@@ -67,22 +73,26 @@ public class JobPostRepositoryImpl implements JobPostRepository {
         Criteria criteria = new Criteria();
         criteria.andOperator(criteriaList);
         Query query = new Query(criteria);
+        logger.info(String.format("Get Post by %d Criteria", criteriaList.length));
         return mongoTemplate.find(query, JobPost.class, jobPostCollectionName);
     }
 
     @Override
     public JobPost addPost(JobPost post) {
+        logger.info(String.format("Added Post with ID: %s", post.getId()));
         return mongoTemplate.insert(post, jobPostCollectionName);
     }
 
     @Override
     public void deletePost(String id) {
         Query query = new Query(Criteria.where("id").is(id));
+        logger.info(String.format("Deleted Post with ID: %s", id));
         mongoTemplate.remove(query, JobPost.class, jobPostCollectionName);
     }
 
     @Override
     public JobPost editPost(JobPost post) {
+        logger.info(String.format("Edited Post with ID: %s", post.getId()));
         return mongoTemplate.save(post, jobPostCollectionName);
     }
 

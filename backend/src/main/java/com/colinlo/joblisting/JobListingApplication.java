@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class JoblistingApplication {
+public class JobListingApplication {
 
     @Bean
     public Docket api() {
@@ -30,7 +30,7 @@ public class JoblistingApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(JoblistingApplication.class, args);
+        SpringApplication.run(JobListingApplication.class, args);
     }
 
 }

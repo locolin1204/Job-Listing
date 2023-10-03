@@ -82,7 +82,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			jobProfile: "",
+			jobProfile: `${process.env.VUE_APP_DEFAULT_JOB_PROFILE}`,
 			jobExp: 0,
 			jobDesc: "",
 			techsRequired: [] as string[],
@@ -128,7 +128,7 @@ export default defineComponent({
 });
 </script>
 
-<style scope>
+<style scoped>
 div {
 	--warning-red-color: rgb(255, 81, 81);
 }
@@ -149,21 +149,9 @@ div {
 	flex-direction: row;
 	padding-right: 1em;
 }
-input,
-textarea {
-	border: none;
-	outline: none;
-	background-color: rgb(240, 240, 240);
-	border-radius: 0.25em;
-	padding: 0.25em 0.5em;
-	font-family: inherit;
-}
 
 .checkbox {
 	margin-right: 1em;
-}
-label {
-	font-weight: 500;
 }
 .input-checkbox > label {
 	cursor: pointer;
@@ -176,9 +164,16 @@ label {
 .button {
 	cursor: pointer;
 }
+
+.submit-button {
+    background-color: var(--global-green-secondary);
+	color:white;
+	font-weight: bold;
+}
+
 .submit-button:hover,
 .button:hover {
-	background-color: rgb(227, 227, 227);
+	background-color: var(--global-green-primary);
 }
 .submit-message {
 	display: flex;
@@ -195,7 +190,7 @@ label {
 	color: var(--warning-red-color);
 }
 .success-icon {
-	color: var(--global-green);
+	color: var(--global-green-primary);
 }
 
 @keyframes rotating {

@@ -1,11 +1,18 @@
 import { JobPostDTO } from "@/model/JobPost";
 import axios, { AxiosResponse } from "axios";
 import { StatusCodes } from "http-status-codes";
+import Cookies from "js-cookie";
+
+
 
 export async function getAllJobs(): Promise<Array<JobPostDTO> | null> {
 	try {
 		const url = new URL(`${process.env.VUE_APP_BASE_URL}/api/v1/job/posts`);
-		const res = await axios.get(url.toString());
+		
+		const res = await axios.get(url.toString(),{
+			// headers: { Authorization: `Bearer ${Cookies.get("jwt_token")}` }
+			withCredentials: true 
+		});
 		const status = await res.status;
 		const data = await res.data;
 

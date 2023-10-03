@@ -20,10 +20,10 @@ export default defineComponent({
 <style scoped>
 .colored {
 	font-size: 1.5em;
-	color: var(--global-green);
+	color: var(--global-green-primary);
 }
 span {
 	font-weight: 700;
-	color: var(--global-green);
+	color: var(--global-green-primary);
 }
 </style>

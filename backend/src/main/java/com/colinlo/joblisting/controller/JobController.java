@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/job")
-@CrossOrigin(origins = "${frontend.base.url}")
+//@CrossOrigin(origins = "${frontend.base.url}")
 public class JobController {
     @Autowired
     JobPostService jobPostService;
@@ -63,3 +63,5 @@ public class JobController {
     public JobPost editPost(@RequestBody JobPost post) throws Exception { return jobPostService.editPost(post); }
 
 }
+
+

@@ -4,6 +4,10 @@ import com.colinlo.joblisting.controller.JobController;
 import com.colinlo.joblisting.model.*;
 import com.colinlo.joblisting.repository.impl.UserRepositoryImpl;
 import com.colinlo.joblisting.service.AuthenticationService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +66,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    @Override
+    public Boolean authenticateToken(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKey(jwtService.getSignInKey())
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e){
+            return false;
+        }
     }
 }
 

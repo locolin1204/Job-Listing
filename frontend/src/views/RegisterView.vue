@@ -1,9 +1,23 @@
 <template>
-Register
+  <div>
+    Register
+  </div>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'RegisterView',
+  data() {
+    return {
+    };
+  },
+  methods: {
+  },
+});
 </script>
 
-<style>
+<style scoped>
 </style>
+

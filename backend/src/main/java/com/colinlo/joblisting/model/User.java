@@ -14,22 +14,38 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-@Document(collection = "Users")
+@Document(collection = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class User implements UserDetails {
     @Id
-    private int id;
+    private String id;
     private String firstname;
     private String lastname;
     private String email;
     private String password;
     private Role role;
+    private Boolean locked = false;
+    private Boolean enabled = false;
+
+    public User(
+            String firstname,
+            String lastname,
+            String email,
+            String password,
+            Role role
+    ) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     @Override
@@ -44,7 +60,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.locked;
     }
 
     @Override
@@ -54,6 +70,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
 }

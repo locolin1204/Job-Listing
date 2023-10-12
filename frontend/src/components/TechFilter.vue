@@ -77,4 +77,7 @@ export default defineComponent({
 .button {
 	margin: 1em;
 }
+.button:hover{
+	background-color: var(--global-green-secondary);
+}
 </style>

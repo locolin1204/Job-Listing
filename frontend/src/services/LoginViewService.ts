@@ -15,8 +15,6 @@ export async function userLogin(
 			password: password,
 		};
 		const res = await axios.post(url.toString(), requestBody);
-		const status = await res.status;
-		const data = await res.data;
 		return res;
 	} catch (error) {
 		console.error(error);

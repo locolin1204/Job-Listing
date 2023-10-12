@@ -20,6 +20,6 @@ public interface JobPostRepository {
 
     // CHANGE Posts
     JobPost editPost(JobPost post) throws Exception;
-    JobPost addPost(JobPost post);
+    JobPost createPost(JobPost post);
     void deletePost(String id);
 }

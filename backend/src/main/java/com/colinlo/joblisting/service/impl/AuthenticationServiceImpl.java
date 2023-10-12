@@ -1,8 +1,6 @@
 package com.colinlo.joblisting.service.impl;
 
-import com.colinlo.joblisting.controller.JobController;
 import com.colinlo.joblisting.model.*;
-import com.colinlo.joblisting.repository.impl.UserRepositoryImpl;
 import com.colinlo.joblisting.service.AuthenticationService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -16,15 +14,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
-
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-
-    Logger logger = LoggerFactory.getLogger(JobController.class);
-
+    Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
     @Autowired
-    private UserRepositoryImpl userRepo;
+    private UserServiceImpl userService;
+//    private UserRepositoryImpl userRepo;
     @Autowired
     private JwtServiceImpl jwtService;
     @Autowired
@@ -40,9 +35,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        userRepo.createUser(user);
+        userService.createUser(user);
         logger.info(String.format("Created User with firstname: %s, lastname: %s, email: %s", user.getFirstname(), user.getLastname(), user.getEmail()));
-
+        // include registration service inside auth service or the other way around
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -56,11 +51,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         request.getPassword()
                 )
         );
-        User user = userRepo.findByEmail(request.getEmail())
-                .orElseThrow(() -> {
-                    logger.error("User: %s not found", request.getEmail());
-                    return new NoSuchElementException("User not found");
-                });
+        User user = userService.findUserByEmail(request.getEmail());
         String jwtToken = jwtService.generateToken(user);
         logger.info(String.format("Authenticated and Generated JWT Token for User with email: %s", user.getEmail()));
         return AuthenticationResponse.builder()

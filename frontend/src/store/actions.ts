@@ -2,7 +2,6 @@ import { ActionContext, ActionTree } from "vuex";
 import { MutationType, Mutations } from "./mutations";
 import { State } from "./state";
 
-
 export enum ActionTypes {
     SetAuth = "SET_AUTH"
 }

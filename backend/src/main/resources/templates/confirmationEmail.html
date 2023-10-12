@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation Email</title>
+    <style>
+        :root {
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+        }
+
+        *{
+            font-size: 1rem;
+            color: #555555;
+        }
+
+        .header{
+            font-size: 2rem;
+            font-weight: 800;
+            padding-top: 1rem;
+            margin: 0;
+        }
+
+        .icon {
+            width: 1.5rem;
+            color: #42b983;
+        }
+
+        .icons {
+            padding: 1.5rem;
+            margin: 0;
+        }
+
+        .email-container {
+            text-align: center;
+            background: #f8fffa;
+            padding: 1rem 2rem 2rem;
+        }
+
+        .email-body {
+            width: 100%;
+        }
+
+        .activation-button {
+            padding: 0.5rem 1rem;
+            margin: 0rem 40%;
+            background: #42b983;
+            color: white;
+            border-radius: 0.2rem;
+        }
+
+        .activation-button:hover {
+            cursor: pointer;
+            background: #85cfae;
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .footer {
+            font-size: 0.8rem;
+            color: #a3a3a3;
+        }
+
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-body">
+        <div class="header">Job Listing account activation</div>
+        <div class="icons">
+            <img class="icon" src="cid:vuejs">
+            <img class="icon" src="cid:mongodb">
+            <img class="icon" src="cid:springboot">
+        </div>
+        <div>
+            Hi <span th:text="${firstname}"/>, <br/>
+            The link will expire in <b>15 minutes</b>. <br />
+            Please click the button below to confirm your Job Listing email. <br/><br/>
+            Regards, <br/>
+            Job Listing Support
+            <br/> <br>
+            <a th:href="${activationLink}">
+                <div class="activation-button">
+                    Activate Now
+                </div>
+            </a>
+            <br>
+            <div class="footer">
+                © 2023 Job Listing. All Rights Reserved
+                <br>
+                Job Listing. Colin Lo
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

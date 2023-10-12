@@ -166,14 +166,14 @@ div {
 }
 
 .submit-button {
-    background-color: var(--global-green-secondary);
+    background-color: var(--global-green-primary);
 	color:white;
 	font-weight: bold;
 }
 
 .submit-button:hover,
 .button:hover {
-	background-color: var(--global-green-primary);
+	background-color: var(--global-green-secondary);
 }
 .submit-message {
 	display: flex;

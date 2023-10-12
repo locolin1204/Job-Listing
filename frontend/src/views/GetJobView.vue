@@ -135,6 +135,10 @@ export default defineComponent({
 	justify-content: center;
 }
 
+.button:hover{
+	background-color: var(--global-green-secondary);
+}
+
 @keyframes horizontal-shaking {
 	0% {
 		transform: translateX(0);

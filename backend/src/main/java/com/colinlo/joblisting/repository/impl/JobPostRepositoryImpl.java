@@ -19,7 +19,7 @@ import java.util.List;
 public class JobPostRepositoryImpl implements JobPostRepository {
     @Autowired
     MongoTemplate mongoTemplate;
-    Logger logger = LoggerFactory.getLogger(JobController.class);
+    Logger logger = LoggerFactory.getLogger(JobPostRepositoryImpl.class);
     String jobPostCollectionName = "jobPosts";
 
     @Override
@@ -78,7 +78,7 @@ public class JobPostRepositoryImpl implements JobPostRepository {
     }
 
     @Override
-    public JobPost addPost(JobPost post) {
+    public JobPost createPost(JobPost post) {
         logger.info(String.format("Added Post with ID: %s", post.getId()));
         return mongoTemplate.insert(post, jobPostCollectionName);
     }

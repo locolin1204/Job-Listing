@@ -27,7 +27,7 @@ public class JobPostServiceImpl implements JobPostService {
     @Value("${spring.data.mongodb.database}")
     private String dbName;
 
-    Logger logger = LoggerFactory.getLogger(JobController.class);
+    Logger logger = LoggerFactory.getLogger(JobPostServiceImpl.class);
 
     @Override
     public String getMongoDbConnectionStatus(){
@@ -63,7 +63,7 @@ public class JobPostServiceImpl implements JobPostService {
 
     @Override
     public JobPost addPost(JobPost post) {
-        return jobPostRepo.addPost(post);
+        return jobPostRepo.createPost(post);
     }
 
     @Override

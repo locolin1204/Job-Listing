@@ -95,13 +95,13 @@ form {
 	font-weight: bold;
 	font-size: 1.1em;
 	/* padding: 1em; */
-	background-color: var(--global-green-secondary);
+	background-color: var(--global-green-primary);
 	color: white;
 	/* width:100%; */
 	margin: 0;
 }
 
 .login-button:hover {
-	background-color: var(--global-green-primary);
+	background-color: var(--global-green-secondary);
 }
 </style>

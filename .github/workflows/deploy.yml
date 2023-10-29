@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Echo Environment Variable
-      - run: | 
+        run: | 
           echo $SPRING_MAIL HOST
           echo $SPRING_MAIL_PORT
 

@@ -12,8 +12,15 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Load environment variables
-        run: source ~/.bashrc
+      - name: Set Environment
+        run: env
+
+      - name: Run Shell Script
+         run: |
+          cd $HOME
+          pwd
+          cd ../..
+          cat etc/profile.d/env_var.sh
 
       - name: Echo Environment Variable
         run: | 

@@ -16,7 +16,7 @@ jobs:
         run: env
 
       - name: Run Shell Script
-         run: |
+        run: |
           cd $HOME
           pwd
           cd ../..

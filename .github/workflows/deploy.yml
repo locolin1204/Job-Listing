@@ -12,10 +12,13 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Load environment variables
+        run: source ~/.bashrc
+
       - name: Echo Environment Variable
         run: | 
-          echo $SPRING_MAIL HOST
-          echo $SPRING_MAIL_PORT
+          echo $SPRING_MAIL_HOST
+          echo $SPRING_MAIL_PORT  
 
       - uses: actions/checkout@v3
       - name: Set up JDK 17

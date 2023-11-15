@@ -25,18 +25,24 @@ jobs:
       - name: Echo Environment Variable
         run: | 
           echo $SPRING_MAIL_HOST
-          echo $SPRING_MAIL_PORT  
+          echo $SPRING_MAIL_PORT 
+
+      - name: Set Permissions for application.log
+        run: chmod 644 path/to/your/application.log
 
       - uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      
       - name: Build with Maven
         working-directory: backend
         run: mvn -B package --file pom.xml
+
       - name: Execute Jar File
         run: sudo kill -9 `sudo lsof -t -i:8080` & sudo java -jar /home/ubuntu/actions-runner/_work/Job-Listing/Job-Listing/backend/target/joblisting-0.0.1-SNAPSHOT.jar &
 

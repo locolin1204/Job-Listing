@@ -28,7 +28,7 @@ jobs:
           echo $SPRING_MAIL_PORT 
 
       - name: Set Permissions for application.log
-        run: chmod 644 path/to/your/application.log
+        run: chmod 644 /home/ubuntu/actions-runner/_work/Job-Listing/Job-Listing/logs/application.log
 
       - uses: actions/checkout@v3
 

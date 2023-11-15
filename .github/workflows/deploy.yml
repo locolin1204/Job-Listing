@@ -28,7 +28,7 @@ jobs:
           echo $SPRING_MAIL_PORT 
 
       - name: Set Permissions for application.log
-        run: sudo chown -R $USER:$USER /home/ubuntu/actions-runner/_work/Job-Listing/Job-Listing/logs application.log
+        run: sudo chown -R $USER:$USER /home/ubuntu/actions-runner/_work/Job-Listing/Job-Listing/logs/application.log
 
       - uses: actions/checkout@v3
 
